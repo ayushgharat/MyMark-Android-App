@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "99094714077",
+    "project_id": "mymark-2c839",
+    "storage_bucket": "mymark-2c839.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:99094714077:android:2c4e8230bdae0e34ddad34",
+        "android_client_info": {
+          "package_name": "com.example.mymark"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "99094714077-vb4cn0trvaji7k6j1q4d86nj4ujc79on.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDfp9T-Tl8FPY3he9vFFEZt5zMvhQH7_00"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "99094714077-vb4cn0trvaji7k6j1q4d86nj4ujc79on.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
