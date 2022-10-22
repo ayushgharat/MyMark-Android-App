@@ -3,6 +3,7 @@ package com.example.mymark;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -56,6 +57,7 @@ public class LoginActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         //SendUserToMainActivity();
                         Toast.makeText(LoginActivity.this, "Log in successful", Toast.LENGTH_SHORT).show();
+                        navigateToHomePage();
                     } else {
                         String message = task.getException().toString();
                         Toast.makeText(LoginActivity.this, "Error : " + message, Toast.LENGTH_SHORT).show();
@@ -63,5 +65,10 @@ public class LoginActivity extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    private void navigateToHomePage() {
+        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+        startActivity(intent);
     }
 }
