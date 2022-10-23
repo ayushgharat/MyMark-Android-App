@@ -24,7 +24,7 @@
         android:layout_margin="10dp">
 
         <ImageButton
-            android:id="@+id/ib_profile_page"
+            android:id="@+id/ib_profile"
             android:layout_width="42dp"
             android:layout_height="42dp"
             android:src="@drawable/profile"
@@ -60,6 +60,41 @@
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragment_prompt"
+        android:layout_marginHorizontal="40dp"
+        android:layout_marginVertical="100dp"
+        android:visibility="invisible"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:name="com.example.mymark.PromptFragment"
+        android:background="@drawable/interest_bubble"/>
+
+    <ImageButton
+        android:id="@+id/ib_positive"
+        app:layout_constraintTop_toBottomOf="@id/fragment_prompt"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="100dp"
+        android:background="#00FF00"
+        android:src="@drawable/check_circle_filled"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="-24dp"
+        android:visibility="invisible"/>
+    <ImageButton
+        android:id="@+id/ib_negative"
+        app:layout_constraintTop_toBottomOf="@id/fragment_prompt"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="100dp"
+        android:background="#FF0000"
+        android:src="@drawable/close_filled"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="-24dp"
+        android:visibility="invisible"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

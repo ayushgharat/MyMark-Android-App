@@ -5,6 +5,8 @@ import static android.content.ContentValues.TAG;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentContainerView;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -40,7 +42,7 @@ public class HomeActivity extends AppCompatActivity {
     private LocationManager locationManager;
     private TextView tv_location;
     private Button bt_locate;
-    private ImageButton ib_profile, ib_logout, ib_home;
+    private ImageButton ib_profile, ib_logout, ib_home, ib_positive, ib_negative;
     static double latitude = 0, longitude = 0;
     LocationRequest locationRequest;
     FusedLocationProviderClient client;
@@ -49,6 +51,7 @@ public class HomeActivity extends AppCompatActivity {
     private DatabaseReference dbRef;
     private FirebaseAuth mAuth;
     private String uid;
+    private FragmentContainerView containerView;
 
     public HomeActivity () {
         FirebaseApp.initializeApp(HomeActivity.this);
@@ -63,9 +66,12 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        ib_profile = (ImageButton) findViewById(R.id.ib_profile_page);
+        ib_profile = (ImageButton) findViewById(R.id.ib_profile);
         ib_logout = (ImageButton) findViewById(R.id.ib_sign_out);
         ib_home = (ImageButton) findViewById(R.id.ib_home);
+        ib_positive = (ImageButton) findViewById(R.id.ib_positive);
+        ib_negative = (ImageButton) findViewById(R.id.ib_negative);
+        containerView = (FragmentContainerView) findViewById(R.id.fragment_prompt);
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         getLocation();
@@ -100,7 +106,8 @@ public class HomeActivity extends AppCompatActivity {
         ib_home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(HomeActivity.this, "You're already at the home screen", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(HomeActivity.this, "You're already at the home screen", Toast.LENGTH_SHORT).show();
+                inflatePrompt();
             }
         });
 
@@ -114,6 +121,14 @@ public class HomeActivity extends AppCompatActivity {
         }
 
         updateCoordinates(uid, latitude, longitude);
+    }
+
+    private void inflatePrompt() {
+        PromptFragment pf = new PromptFragment();
+        containerView.setVisibility(View.VISIBLE);
+        ib_positive.setVisibility(View.VISIBLE);
+        ib_negative.setVisibility(View.VISIBLE);
+
     }
 
     public void updateGoogleFragment(Bundle bundle) {
