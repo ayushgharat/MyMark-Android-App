@@ -3,13 +3,13 @@ package com.example.mymark;
 public class User {
 
 
-    public User(String email, String name, String bio, String[] interests, double latitude, double longitude) {
+    public User(String email, String name, String bio, String[] interests, String latitude, String longitude) {
         this.email = email;
         this.name = name;
         this.bio = bio;
         this.interests = interests;
-        this.latitude = latitude;
-        this.longitude = longitude;
+        this.latitude = Double.parseDouble(latitude);
+        this.longitude = Double.parseDouble(longitude);
     }
 
     public String getEmail() {

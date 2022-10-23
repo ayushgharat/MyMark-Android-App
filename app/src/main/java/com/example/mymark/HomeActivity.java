@@ -20,6 +20,7 @@ import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +35,7 @@ public class HomeActivity extends AppCompatActivity {
     private LocationManager locationManager;
     private TextView tv_location;
     private Button bt_locate;
+    private ImageButton ib_profile;
     static double latitude = 0, longitude = 0;
     LocationRequest locationRequest;
 
@@ -47,19 +49,13 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        Log.e(TAG,"Fucked");
-        bt_locate = (Button) findViewById(R.id.bt_find_location);
-        Log.e(TAG,"Fucked");
-        Log.e(TAG,bt_locate.toString());
-        bt_locate.setOnClickListener(new View.OnClickListener() {
+
+        ib_profile = (ImageButton) findViewById(R.id.ib_profile_page);
+        ib_profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-//        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-//            OnGPS();
-//        } else {
-//            getLocation();
-//        }
+                Intent intent = new Intent(HomeActivity.this, ProfileActivity.class);
+                startActivity(intent);
             }
         });
 
