@@ -3,7 +3,7 @@ package com.example.mymark;
 public class User {
 
 
-    public User(String email, String name, String bio, String[] interests, String latitude, String longitude, String uri) {
+    public User(String email, String name, String bio, String[] interests, String latitude, String longitude, String uri, String uid) {
         this.email = email;
         this.name = name;
         this.bio = bio;
@@ -11,6 +11,7 @@ public class User {
         this.latitude = Double.parseDouble(latitude);
         this.longitude = Double.parseDouble(longitude);
         this.uri = uri;
+        this.uid = uid;
     }
 
     public String getEmail() {

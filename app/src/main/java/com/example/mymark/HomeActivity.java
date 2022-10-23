@@ -16,6 +16,7 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.location.LocationRequest;
 import android.location.LocationListener;
+import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -39,7 +40,7 @@ public class HomeActivity extends AppCompatActivity {
     private LocationManager locationManager;
     private TextView tv_location;
     private Button bt_locate;
-    private ImageButton ib_profile;
+    private ImageButton ib_profile, ib_logout;
     static double latitude = 0, longitude = 0;
     LocationRequest locationRequest;
     FusedLocationProviderClient client;
@@ -63,17 +64,10 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         ib_profile = (ImageButton) findViewById(R.id.ib_profile_page);
-        ib_profile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(HomeActivity.this, ProfileActivity.class);
-                startActivity(intent);
-            }
-        });
+        ib_logout = (ImageButton) findViewById(R.id.ib_sign_out);
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         getLocation();
-
 
         Bundle bundle = new Bundle();
         bundle.putString("lat", latitude + "");
@@ -84,6 +78,23 @@ public class HomeActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         dbRef = database.getReference("Username");
         uid = mAuth.getUid();
+
+        ib_profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HomeActivity.this, ProfileActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        ib_logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mAuth.signOut();
+                Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
+                startActivity(intent);
+            }
+        });
 
         Intent intent = new Intent(this, LocationService.class);
         intent.putExtra("uid", mAuth.getUid());

@@ -34,6 +34,18 @@
             android:background="@color/white"
             />
 
+        <ImageButton
+            android:id="@+id/ib_sign_out"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/logout"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="50dp"
+            app:layout_constraintTop_toTopOf="parent"
+            android:background="@color/white"
+            />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
