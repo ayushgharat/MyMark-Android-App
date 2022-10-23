@@ -4,8 +4,13 @@ import static android.content.ContentValues.TAG;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -17,6 +22,8 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -38,7 +45,7 @@ public class MapsFragment extends Fragment {
         @Override
         public void onMapReady(GoogleMap googleMap) {
             LatLng userLocation = new LatLng(latitude, longitude);
-            googleMap.addMarker(new MarkerOptions().position(userLocation).title("User Location"));
+            googleMap.addMarker(new MarkerOptions().position(userLocation).title("User Location").icon(BitmapDescriptorFactory.fromResource(R.drawable.person_marker)));
             googleMap.moveCamera(CameraUpdateFactory.newLatLng(userLocation));
             googleMap.setMinZoomPreference(18.0f);
             googleMap.setMaxZoomPreference(25.0f);

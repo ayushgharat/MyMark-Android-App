@@ -4,54 +4,78 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity">
+    tools:context=".LoginActivity"
+    android:background="@color/black">
+
+    <ImageView
+        android:id="@+id/iv_logo"
+        android:src="@drawable/logowithtext"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="match_parent"
+        android:layout_marginTop="32dp"
+        android:layout_height="160dp"
+        android:layout_marginHorizontal="48dp"/>
 
     <TextView
         android:id="@+id/tv_title"
-        app:layout_constraintTop_toTopOf="parent"
+        android:textColor="@color/white"
+        app:layout_constraintTop_toBottomOf="@id/iv_logo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:textAlignment="center"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginTop="-300dp"
-        android:layout_marginBottom="100dp"
-        android:text="Welcome to MyMark. Login to continue"
+        android:layout_marginTop="40dp"
+        android:ellipsize="end"
+        android:layout_marginHorizontal="24dp"
+        android:text="Welcome to Evince. \nLogin to continue"
+        android:lineSpacingExtra="2sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
     <EditText
         android:id="@+id/et_email_login"
-        app:layout_constraintTop_toTopOf="@id/tv_title"
+        app:layout_constraintTop_toBottomOf="@id/tv_title"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Email"
+        android:textColorHint="@color/purple_200"
+        android:textColor="@color/black"
         android:layout_marginTop="100dp"
         android:layout_marginHorizontal="32dp"
-        android:paddingHorizontal="12dp"/>
+        android:paddingHorizontal="12dp"
+        android:background="@drawable/homepage_bubble"
+        android:paddingVertical="14dp"/>
 
     <EditText
         android:id="@+id/et_password_login"
-        app:layout_constraintTop_toTopOf="@id/et_email_login"
+        app:layout_constraintTop_toBottomOf="@id/et_email_login"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Password"
-        android:layout_marginTop="64dp"
+        android:textColorHint="@color/purple_200"
+        android:textColor="@color/black"
+        android:layout_marginTop="48dp"
         android:layout_marginHorizontal="32dp"
-        android:paddingHorizontal="12dp"/>
+        android:paddingHorizontal="12dp"
+        android:background="@drawable/homepage_bubble"
+        android:paddingVertical="14dp"/>
 
     <Button
         android:id="@+id/bt_login"
-        app:layout_constraintTop_toBottomOf="@id/et_password_login"
-        app:layout_constraintStart_toStartOf="parent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="32dp"
-        android:layout_marginTop="64dp"
-        android:text="Login"/>
+        android:layout_marginTop="72dp"
+        android:background="@drawable/login_button"
+        android:paddingVertical="18dp"
+        android:text="Login"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/et_password_login" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

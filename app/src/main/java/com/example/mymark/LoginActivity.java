@@ -23,19 +23,22 @@ public class LoginActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private EditText et1, et2;
+    private Button bt_login;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().hide();
         setContentView(R.layout.activity_login);
 
         et1 = (EditText) findViewById(R.id.et_email_login);
         et2 = (EditText) findViewById(R.id.et_password_login);
-        Button bt = (Button) findViewById(R.id.bt_login);
+        bt_login = (Button) findViewById(R.id.bt_login);
+        bt_login.setBackgroundResource(R.drawable.login_button);
 
         mAuth = FirebaseAuth.getInstance();
 
-        bt.setOnClickListener(new View.OnClickListener() {
+        bt_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //Toast.makeText(LoginActivity.this, et1.getText().toString(), Toast.LENGTH_SHORT).show();
