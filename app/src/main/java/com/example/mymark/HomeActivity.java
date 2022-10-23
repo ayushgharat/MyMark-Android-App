@@ -1,5 +1,7 @@
 package com.example.mymark;
 
+import static android.content.ContentValues.TAG;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,6 +19,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -27,29 +30,49 @@ public class HomeActivity extends AppCompatActivity {
     private LocationManager locationManager;
     private TextView tv_location;
     private Button bt_locate;
-    String latitude, longitude;
+    static double latitude = 0, longitude = 0;
 
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
-        tv_location = (TextView) findViewById(R.id.tv_location_test);
+        Log.e(TAG,"Fucked");
         bt_locate = (Button) findViewById(R.id.bt_find_location);
-
+        Log.e(TAG,"Fucked");
+        Log.e(TAG,bt_locate.toString());
         bt_locate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-                if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-                    OnGPS();
-                } else {
-                    getLocation();
-                }
+
+//        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+//            OnGPS();
+//        } else {
+//            getLocation();
+//        }
             }
         });
 
+        Log.e(TAG,"Fucked");
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+        getLocation();
+
+        Log.e(TAG, "onClick: latitude = " + latitude);
+        Log.e(TAG, "onClick: longitude = " + longitude);
+
+        Bundle bundle = new Bundle();
+        bundle.putString("lat", latitude + "");
+        bundle.putString("long", longitude + "");
+
+//        if (savedInstanceState == null) {
+//            getSupportFragmentManager().beginTransaction()
+//                    .setReorderingAllowed(true)
+//                    .add(R.id.fragment_container_view, MapsFragment.class, bundle)
+//                    .commit();
+//        }
+        MapsFragment obj = new MapsFragment();
+        obj.setArguments(bundle);
 
     }
 
@@ -77,16 +100,14 @@ public class HomeActivity extends AppCompatActivity {
         } else {
             Location locationGPS = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
             if (locationGPS != null) {
-                double lat = locationGPS.getLatitude();
-                double longi = locationGPS.getLongitude();
-                latitude = String.valueOf(lat);
-                longitude = String.valueOf(longi);
-                tv_location.setText("Your Location: " +
-                       ""  + "Latitude: " + latitude + " " + "Longitude: " + longitude);
+                latitude = locationGPS.getLatitude();
+                longitude = locationGPS.getLongitude();
+                //tv_location.setText("Your Location: " + " " + "Latitude: " + latitude + " " + "Longitude: " + longitude);
             } else {
                 Toast.makeText(this, "Unable to find location.", Toast.LENGTH_SHORT).show();
             }
         }
+        Log.e(TAG,"Fucked");
     }
 
 }
