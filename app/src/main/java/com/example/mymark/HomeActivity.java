@@ -15,6 +15,8 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
 import android.location.LocationRequest;
+import android.location.LocationListener;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
@@ -24,6 +26,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -38,11 +42,19 @@ public class HomeActivity extends AppCompatActivity {
     private ImageButton ib_profile;
     static double latitude = 0, longitude = 0;
     LocationRequest locationRequest;
+    FusedLocationProviderClient client;
 
     private FirebaseDatabase database;
     private DatabaseReference dbRef;
     private FirebaseAuth mAuth;
     private String uid;
+
+    public HomeActivity () {
+        FirebaseApp.initializeApp(HomeActivity.this);
+        database = FirebaseDatabase.getInstance();
+        mAuth = FirebaseAuth.getInstance();
+        dbRef = database.getReference("Username");
+    }
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -59,67 +71,44 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        Log.e(TAG,"Fucked");
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-
         getLocation();
 
-        Log.e(TAG, "onClick: latitude = " + latitude);
-        Log.e(TAG, "onClick: longitude = " + longitude);
 
         Bundle bundle = new Bundle();
         bundle.putString("lat", latitude + "");
         bundle.putString("long", longitude + "");
-
-//        if (savedInstanceState == null) {
-//            getSupportFragmentManager().beginTransaction()
-//                    .setReorderingAllowed(true)
-//                    .add(R.id.fragment_container_view, MapsFragment.class, bundle)
-//                    .commit();
-//        }
-        MapsFragment obj = new MapsFragment();
-        obj.setArguments(bundle);
+        updateGoogleFragment(bundle);
 
         database = FirebaseDatabase.getInstance();
         mAuth = FirebaseAuth.getInstance();
         dbRef = database.getReference("Username");
         uid = mAuth.getUid();
 
-        updateCoordinates(uid, latitude, longitude);
+        Intent intent = new Intent(this, LocationService.class);
+        intent.putExtra("uid", mAuth.getUid());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            startForegroundService(intent);
+        }
+        else {
+            startService(intent);
+        }
 
-        //addEmailToFirebase(mAuth.getCurrentUser().getEmail());
-//        dbRef.addChildEventListener(new ChildEventListener() {
-//            @Override
-//            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-//                String name = String.valueOf(snapshot.getValue());
-//                if (name != mAuth.getCurrentUser().getEmail()) {
-//                    addNameToFirebase(mAuth.getCurrentUser().getEmail());
-//                }
-//            }
-//
-//            @Override
-//            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-//
-//            }
-//
-//            @Override
-//            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-//
-//            }
-//
-//            @Override
-//            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
+        updateCoordinates(uid, latitude, longitude);
     }
 
-    private void updateCoordinates(String uid, double latitude, double longitude) {
+    public void updateGoogleFragment(Bundle bundle) {
+        MapsFragment obj = new MapsFragment();
+        obj.setArguments(bundle);
+    }
+
+    public void updateCoordinates(String uid, double latitude, double longitude) {
+        database = FirebaseDatabase.getInstance();
+        dbRef = database.getReference("Username");
+        Bundle bundle = new Bundle();
+        bundle.putString("lat", latitude + "");
+        bundle.putString("long", longitude + "");
+        updateGoogleFragment(bundle);
         dbRef.child(uid).child("latitude").setValue(latitude);
         dbRef.child(uid).child("longitude").setValue(longitude);
     }
@@ -159,7 +148,6 @@ public class HomeActivity extends AppCompatActivity {
                 Toast.makeText(this, "Unable to find location.", Toast.LENGTH_SHORT).show();
             }
         }
-        Log.e(TAG,"Fucked");
     }
 
 }
