@@ -40,6 +40,8 @@ public class MapsFragment extends Fragment {
             LatLng userLocation = new LatLng(latitude, longitude);
             googleMap.addMarker(new MarkerOptions().position(userLocation).title("User Location"));
             googleMap.moveCamera(CameraUpdateFactory.newLatLng(userLocation));
+            googleMap.setMinZoomPreference(18.0f);
+            googleMap.setMaxZoomPreference(25.0f);
         }
     };
 

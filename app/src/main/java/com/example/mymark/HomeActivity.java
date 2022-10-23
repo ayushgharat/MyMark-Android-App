@@ -40,7 +40,7 @@ public class HomeActivity extends AppCompatActivity {
     private LocationManager locationManager;
     private TextView tv_location;
     private Button bt_locate;
-    private ImageButton ib_profile, ib_logout;
+    private ImageButton ib_profile, ib_logout, ib_home;
     static double latitude = 0, longitude = 0;
     LocationRequest locationRequest;
     FusedLocationProviderClient client;
@@ -65,6 +65,7 @@ public class HomeActivity extends AppCompatActivity {
 
         ib_profile = (ImageButton) findViewById(R.id.ib_profile_page);
         ib_logout = (ImageButton) findViewById(R.id.ib_sign_out);
+        ib_home = (ImageButton) findViewById(R.id.ib_home);
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         getLocation();
@@ -93,6 +94,13 @@ public class HomeActivity extends AppCompatActivity {
                 mAuth.signOut();
                 Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        ib_home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(HomeActivity.this, "You're already at the home screen", Toast.LENGTH_SHORT).show();
             }
         });
 

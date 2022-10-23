@@ -78,7 +78,6 @@ public class ProfileActivity extends AppCompatActivity {
                 //user = snapshot.getValue(User.class);
                 Log.e(TAG, "onDataChange: " + snapshot.getValue());
                 Map<String, Object> map = (HashMap<String, Object>) snapshot.getValue();
-
                 user = new User((String) map.get("email"), (String) map.get("name"), (String) map.get("bio"),process((ArrayList<String>) map.get("interests")), String.valueOf(map.get("latitude")), String.valueOf(map.get("longitude")), String.valueOf(map.get("uri")), String.valueOf("uid"));
                 populateCircleImageView(user.getUri());
                 populateText(user);
