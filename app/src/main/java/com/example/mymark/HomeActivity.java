@@ -2,12 +2,9 @@ package com.example.mymark;
 
 import static android.content.ContentValues.TAG;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -16,7 +13,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
-import android.location.LocationListener;
 import android.location.LocationManager;
 import android.location.LocationRequest;
 import android.os.Bundle;
@@ -28,11 +24,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -45,6 +40,7 @@ public class HomeActivity extends AppCompatActivity {
     private FirebaseDatabase database;
     private DatabaseReference dbRef;
     private FirebaseAuth mAuth;
+    private String uid;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -90,33 +86,50 @@ public class HomeActivity extends AppCompatActivity {
 
         database = FirebaseDatabase.getInstance();
         mAuth = FirebaseAuth.getInstance();
-        dbRef = database.getReference("username");
-        dbRef.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+        dbRef = database.getReference("Username");
+        uid = mAuth.getUid();
 
-            }
+        updateCoordinates(uid, latitude, longitude);
 
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+        //addEmailToFirebase(mAuth.getCurrentUser().getEmail());
+//        dbRef.addChildEventListener(new ChildEventListener() {
+//            @Override
+//            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+//                String name = String.valueOf(snapshot.getValue());
+//                if (name != mAuth.getCurrentUser().getEmail()) {
+//                    addNameToFirebase(mAuth.getCurrentUser().getEmail());
+//                }
+//            }
+//
+//            @Override
+//            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+//
+//            }
+//
+//            @Override
+//            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+//
+//            }
+//
+//            @Override
+//            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
+    }
 
-            }
+    private void updateCoordinates(String uid, double latitude, double longitude) {
+        dbRef.child(uid).child("latitude").setValue(latitude);
+        dbRef.child(uid).child("longitude").setValue(longitude);
+    }
 
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
+    private void addEmailToFirebase(String email) {
+        dbRef.child(mAuth.getUid()).setValue(email);
     }
 
     private void OnGPS() {
