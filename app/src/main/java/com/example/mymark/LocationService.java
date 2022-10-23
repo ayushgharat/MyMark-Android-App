@@ -111,8 +111,8 @@ public class LocationService extends Service {
                     return;
                 }
                 for (Location location : locationResult.getLocations()) {
-                    // HomeActivity ha = new HomeActivity();
-                    // ha.updateCoordinates(uid, location.getLatitude(), location.getLongitude());
+                    DatabaseAction da = new DatabaseAction(uid);
+                    da.updateCoordinates(uid, location.getLatitude(), location.getLongitude());
                 }
             }
         };
@@ -147,9 +147,9 @@ public class LocationService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-
+          if (intent.getExtras()!=null){
             uid = (String) intent.getExtras().get("uid");
-            Log.e(TAG, "onStartCommand: " + uid );
+            Log.e(TAG, "onStartCommand: " + uid );}
             handler = new Handler();
         runnable = new Runnable() {
             public void run() {
