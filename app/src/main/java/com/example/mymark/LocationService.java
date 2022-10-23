@@ -111,8 +111,8 @@ public class LocationService extends Service {
                     return;
                 }
                 for (Location location : locationResult.getLocations()) {
-                   // HomeActivity ha = new HomeActivity();
-                    //ha.updateCoordinates(uid, location.getLatitude(), location.getLongitude());
+                    // HomeActivity ha = new HomeActivity();
+                    // ha.updateCoordinates(uid, location.getLatitude(), location.getLongitude());
                 }
             }
         };
